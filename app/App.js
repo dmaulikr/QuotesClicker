@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Keyboard
 } from "react-native";
 
 export default class App extends React.Component {
@@ -42,6 +43,7 @@ export default class App extends React.Component {
       quotes: newQuotes,
       inputQuote: ""
     });
+    Keyboard.dismiss();
   };
 
   render() {
@@ -69,15 +71,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "lightblue",
     alignItems: "center",
     justifyContent: "center"
   },
   input: {
     margin: 15,
     height: 40,
+    backgroundColor: "white",
     borderColor: "#7a42f4",
-    borderWidth: 1
+    borderWidth: 1,
+    padding: 3
   },
   output: {
     fontSize: 50,
