@@ -5,13 +5,14 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  Keyboard
+  Keyboard,
+  Button
 } from "react-native";
 
 export default class App extends React.Component {
   state = {
     arrayIndex: 0,
-    quotes: ["hello", "what's up", "bye"],
+    quotes: ["hello", "what's up", "bye", "yeet", "yuh yuh"],
     input: ""
   };
 
@@ -25,6 +26,13 @@ export default class App extends React.Component {
         arrayIndex: this.state.arrayIndex + 1
       });
     }
+  };
+
+  changeRandomText = () => {
+    this.setState({
+      ...this.state,
+      arrayIndex: Math.random() * 3
+    });
   };
 
   updateText = text => {
@@ -49,7 +57,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text onPress={this.changeText} style={styles.output}>
+        <Text style={styles.output}>
           {this.state.quotes[this.state.arrayIndex]}
         </Text>
         <TextInput
@@ -59,8 +67,18 @@ export default class App extends React.Component {
           keyboardAppearance="dark"
           onChangeText={text => this.updateText(text)}
           onSubmitEditing={this.addText}
-          returnKeyType="send"
+          returnKeyType="Send"
           value={this.state.inputQuote}
+        />
+        <Button
+          title="Next Quote"
+          styles={styles.input}
+          onPress={this.changeText}
+        />
+        <Button
+          title="Random Quote"
+          styles={styles.input}
+          onPress={this.changeRandomText}
         />
       </View>
     );
