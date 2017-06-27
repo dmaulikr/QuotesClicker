@@ -13,7 +13,15 @@ export default class App extends React.Component {
   state = {
     arrayIndex: 0,
     quotes: ["hello", "what's up", "bye", "yeet", "yuh yuh"],
-    input: ""
+    input: "",
+    wantsToAddText: false
+  };
+
+  promptAddText = () => {
+    this.setState({
+      ...this.state,
+      wantsToAddText: true
+    });
   };
 
   changeText = () => {
@@ -31,7 +39,7 @@ export default class App extends React.Component {
   changeRandomText = () => {
     this.setState({
       ...this.state,
-      arrayIndex: Math.random() * 3
+      arrayIndex: Math.floor(Math.random() * this.state.quotes.length)
     });
   };
 
@@ -49,7 +57,8 @@ export default class App extends React.Component {
     this.setState({
       ...this.state,
       quotes: newQuotes,
-      inputQuote: ""
+      inputQuote: "",
+      wantsToAddText: false
     });
     Keyboard.dismiss();
   };
@@ -60,16 +69,23 @@ export default class App extends React.Component {
         <Text style={styles.output}>
           {this.state.quotes[this.state.arrayIndex]}
         </Text>
-        <TextInput
-          ref="newQuotes"
-          style={styles.input}
-          placeholder="Enter a quote you'd like to add"
-          keyboardAppearance="dark"
-          onChangeText={text => this.updateText(text)}
-          onSubmitEditing={this.addText}
-          returnKeyType="Send"
-          value={this.state.inputQuote}
-        />
+        {this.state.wantsToAddText === false &&
+          <Button
+            title="Add Quote"
+            styles={styles.input}
+            onPress={this.promptAddText}
+          />}
+        {this.state.wantsToAddText === true &&
+          <TextInput
+            ref="newQuotes"
+            style={styles.input}
+            placeholder="Enter a quote you'd like to add"
+            keyboardAppearance="dark"
+            onChangeText={text => this.updateText(text)}
+            onSubmitEditing={this.addText}
+            returnKeyType="send"
+            value={this.state.inputQuote}
+          />}
         <Button
           title="Next Quote"
           styles={styles.input}
